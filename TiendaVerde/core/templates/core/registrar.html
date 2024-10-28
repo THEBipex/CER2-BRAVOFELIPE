@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<main class="conteiner">
+    <div class="row">
+        <section>
+            <div class="col-md-4 offset-md-4">
+                <form method="POST" class="card card-body">
+
+                    {% csrf_token %}
+                    <h1 class="display-3">Registrarse</h1>
+
+                    <div class="mb-3">
+                        <label for="username" >Nombre</label>
+                        <input type="text" name="username" id="username" class="form-control" placeholder="Nombre">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="usermail">Correo Electrónico</label>
+                        <input type="text" name="usermail" id="usermail" class="form-control" placeholder="Correo Electrónico">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password1">Contraseña</label>
+                        <input type="password" name="password1" id="password1" class="form-control" placeholder="Contraseña">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password2">Contraseña</label>
+                        <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirme su contraseña">
+                    </div>
+                    <div>
+                        <button class="btn btn-secundary">Registrarse</button>
+                    </div
+                </form>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

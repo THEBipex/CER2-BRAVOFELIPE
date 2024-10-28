@@ -1,0 +1,57 @@
+{% extends 'tienda/base.html' %}
+
+{% block title %}Solicitud de Reciclaje - Tienda Verde{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Solicitud de Reciclaje</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="waste_type" class="form-label">Tipo de Residuo</label>
+        <select class="form-select" id="waste_type" name="waste_type" required>
+            <option value="">Seleccione un tipo</option>
+            {% for type, label in form.fields.waste_type.choices %}
+                <option value="{{ type }}">{{ label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label for="subcategory" class="form-label">Subcategoría</label>
+        <select class="form-select" id="subcategory" name="subcategory" required>
+            <option value="">Seleccione primero un tipo de residuo</option>
+        </select>
+    </div>
+
+    {{ form.quantity|as_crispy_field }}
+    {{ form.address|as_crispy_field }}
+    {{ form.comments|as_crispy_field }}
+
+    <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
+</form>
+
+<script>
+const subcategories = {
+    'PLASTIC': ['Botellas', 'Envases', 'Bolsas'],
+    'PAPER': ['Periódicos', 'Cartón', 'Papel de oficina'],
+    'GLASS': ['Botellas', 'Frascos', 'Cristalería'],
+    'METAL': ['Latas', 'Cables', 'Electrodomésticos pequeños'],
+    'ELECTRONIC': ['Teléfonos móviles', 'Baterías', 'Componentes de computadoras']
+};
+
+document.getElementById('waste_type').addEventListener('change', function() {
+    const subcategorySelect = document.getElementById('subcategory');
+    subcategorySelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
+    
+    const selectedType = this.value;
+    if (selectedType in subcategories) {
+        subcategories[selectedType].forEach(sub => {
+            const option = document.createElement('option');
+            option.value = sub;
+            option.textContent = sub;
+            subcategorySelect.appendChild(option);
+        });
+    }
+});
+</script>
+{% endblock %}
